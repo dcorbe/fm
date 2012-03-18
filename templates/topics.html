@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>My Topics</title>
+</head>
+
+<body>
+  <a href="/thread/new">New Topic</a>
+  <div id=sublist>
+    <table>
+      <thead>
+	<tr>
+	  <th>Thread</th>
+	  <th>Replies</th>
+	  <th>Last Post</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for thread in subscriptions.threads %}
+	<tr>
+	  <td><div id="subject"><a href="/thread/{{ thread.linkhash }}">{{ thread.subject }}</a></div></td>
+	  <td><div id="replies">{{ thread.postcount - 1 }}</div></td>
+	  <td><div id="lastpost">{{ thread.bumped }}</div></td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

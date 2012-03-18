@@ -1,0 +1,30 @@
+<html>
+
+<head>
+<title>basement.fm: Search Results</title>
+</head>
+
+<body>
+  <div id=playlist>
+    <table>
+      <thead>
+	<tr>
+	  <th>Artist</th>
+	  <th>Title</th>
+	  <th>Request This Song!</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for song in results %}
+	<tr>
+	  <td>{{ song['artist'] }}</td>
+	  <td>{{ song['title'] }}</td>
+	  <td><a href=/request/{{ song['i_song'] }}>Request</a></td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

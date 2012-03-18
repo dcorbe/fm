@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>OpenQT -- {{ thread.subject }}</title>
+</head>
+
+<body>
+  <div id=thread>
+
+    {% for post in thread.posts %}
+    <div id=post>
+      <div id=postsubject>
+	{{ post.subject }}
+      </div>
+
+      <div id=postauthor>
+	by {{ post.i_user.username }}
+      </div>
+
+      <div id=postdate>
+	{{ time.ctime(post.ts) }}
+      </div>
+
+      <div id=postbody>
+	{{ bbcode.render(post.post) }}
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+
+  <div id=quickreply>
+    <h3>Quick Reply:</h3>
+    <form method=post action=/thread/{{thread.id}}>
+      <textarea name=postbody rows=6 cols=80></textarea>
+      <input type="submit" />
+    </form>
+  </div>
+
+</body>
+
+</html>
+

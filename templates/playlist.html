@@ -1,0 +1,42 @@
+<html>
+
+<head>
+<title>basement.fm: History</title>
+</head>
+
+<body>
+  <div id=playlist>
+    <table>
+      <thead>
+	<tr>
+	  <th>Artist</th>
+	  <th>Title</th>
+	  <th>Requested By</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for song in history %}
+	<tr>
+	  <td>{{ song['artist'] }}</td>
+	  <td>{{ song['title'] }}</td>
+	  <td>{{ song['username'] }}</td>
+	</tr>
+	{% endfor %}
+	<tr class=playing>
+	  <td>-> {{ playing['artist'] }}</td>
+	  <td>{{ playing['title'] }}</td>
+	  <td>{{ playing['username'] }}</td>
+	</tr>
+	{% for song in requests %}
+	<tr>
+	  <td>{{ song['artist'] }}</td>
+	  <td>{{ song['title'] }}</td>
+	  <td>{{ song['username'] }}</td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
