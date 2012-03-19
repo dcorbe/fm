@@ -1,0 +1,9 @@
+*** TODO LIST *** (in no particular order)
+* Store album information and work display into search results template
+* Store release information (Year, etc?) and work display into search results template
+* Store track information (length, etc?) and work into the playlist template
+* Usernames should always be clickable links which lead to profile information
+
+* Integration between music side and forum side
+* Should be able to post comments on songs, comments translate to threads in a special forum
+
