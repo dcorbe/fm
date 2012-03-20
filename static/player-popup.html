@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>basement.fm: Media Player</title>
+<script type="text/javascript" src="/static/flowplayer/flowplayer-3.2.8.min.js"></script>
+</head>
+
+<body>
+<div id="player"></div>
+<script>
+flowplayer("player", "/static/flowplayer/flowplayer-3.2.8.swf", {
+    clip:
+    {
+	url: 'http://apollo.corbe.net:8004/live.mp3',
+	live: true,
+	autoPlay: true,
+	autoBuffering: true,
+	onPause: function(clip) 
+	{
+	    this.stop();
+	},
+	onResume: function(clip) 
+	{
+	    this.play();
+	}
+    },
+    plugins:
+    {
+	controls:
+	{
+	    url: '/static/flowplayer/flowplayer.controls-3.2.8.swf',
+	    fullscreen: false,
+	    height: 50,
+	    autoHide: 'never'
+	},
+	audio:
+	{
+	    url: '/static/flowplayer/flowplayer.audio-3.2.8.swf'
+	}
+    }
+});
+</script>
+</div>
+</body>
+</html>
