@@ -1,31 +1,40 @@
 <html>
 <head>
 <title>OpenQT -- {{ thread.subject }}</title>
+{% include 'common_header.html' %}
 </head>
 
 <body>
-  <div id=thread>
+  {% include 'header.html' %}
 
+  <div id="thread">
     {% for post in thread.posts %}
-    <div id=post>
-      <div id=postsubject>
-	{{ post.subject }}
+    <div id="post">
+      {{ thread.resequence() }}
+      <div id="postheader" class="rounded-left rounded-right">
+	<ul>
+	  <li class="float-right">
+	    #{{ thread.sequence }}
+	  </li>
+	  <li>{{ time.ctime(post.ts) }}</li>
+	</ul>
       </div>
-
-      <div id=postauthor>
-	by {{ post.i_user.username }}
+      
+      <div id="postauthor">
+	{{ post.i_user.username }}
       </div>
-
-      <div id=postdate>
-	{{ time.ctime(post.ts) }}
-      </div>
-
-      <div id=postbody>
-	{{ bbcode.render(post.post) }}
+      <div id="postwrapper">
+	<div id="postsubject">
+	  {% if thread.sequence == 1 %}
+	  <h1>{{ post.subject }}</h1>
+	  {% endif %}
+	</div>	
+	<div id="postbody">
+	  {{ bbcode.render(post.post) }}
+	</div>
       </div>
     </div>
     {% endfor %}
-
   </div>
 
   <div id=quickreply>
@@ -35,7 +44,7 @@
       <input type="submit" />
     </form>
   </div>
-
+  {% include 'footer.html' %}
 </body>
 
 </html>

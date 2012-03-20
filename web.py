@@ -3,8 +3,10 @@ from werkzeug import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
 
 from DB import *
+from forum import forum
 
 app = Flask(__name__)
+app.register_blueprint(forum)
 app.jinja_env.autoescape = False
 conn = DB()
 

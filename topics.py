@@ -84,6 +84,7 @@ class Topic():
         self.bumped = 0
         self.postcount = 0
         self.linkhash = None
+        self.sequence = 0
 
         if i_topic:
             self.open(i_topic)
@@ -251,3 +252,7 @@ class Topic():
         self.id = db.lastrowid
 
         self.bump()
+
+    def resequence(self):
+        self.sequence = self.sequence + 1
+        return ''

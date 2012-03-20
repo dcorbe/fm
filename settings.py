@@ -4,5 +4,5 @@ class Settings():
 
     def general(self):
         dict = { }
-        dict['render_forums'] = 1
+        dict['render_forums'] = 0
         return(dict)

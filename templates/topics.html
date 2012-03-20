@@ -1,9 +1,11 @@
 <html>
 <head>
 <title>My Topics</title>
+{% include 'common_header.html' %}
 </head>
 
 <body>
+{% include 'header.html' %}
   <a href="/thread/new">New Topic</a>
   <div id=sublist>
     <table>
@@ -25,6 +27,7 @@
       </tbody>
     </table>
   </div>
+{% include 'footer.html' %}
 </body>
 
 </html>
