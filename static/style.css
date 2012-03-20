@@ -1,69 +1,105 @@
-body
-{
-	#background-image:url('ambient-background.jpg');
-	background-repeat:no-repeat;
-	background-position:center;
-	background-color:#000000; 
+body,
+html {
+    color:#000;
+    background-color: #ddd;
+    font-family: Helvetica, Arial, sans-serif;
+    padding:0px;
+    margin:0px;
 }
 
-
-#outer
-{
-        display:table;
-        height:70%;
-        width:100%;
-        overflow: hidden;
+/* The "Information" Header */
+#header {
+    background-image:url('/static/basementfm-wikilogo.png');
+    height:110px;
+    background-repeat:no-repeat;
+    background-color: #111;
 }
 
-#inner
-{
-        text-align:center;
-        vertical-align:middle;
-        display: table-cell;
-}
-
-#navbar
-{
-	text-align:center;
-	vertical-align:bottom;
-	clear: both;
+/* Our Navigation Bar */
+#navbar {
+    /* text-align:center; */
+    background-color: #444;
+    border-top: 2px solid #555;
+    border-bottom: 1px solid #555;
 }
 
 #navbar ul
 {
-	margin:20px;
-	padding:0;
-	list-style:none;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    padding-top:6px;
+    padding-bottom:6px;
+    padding-left:20px;
 }
 
 #navbar li
 {
-	display:inline;
-	padding:0;
-	margin:0;
+    display:inline;
 }
 
-#navbar a:link,
-#navbar a:visited
+#navbar a:link, a:visited 
 {
-	color:#000000;
-	padding:20px 40px 4px 10px;
-	width:auto;
-	text-decoration:none;
-	font:bold 1em/1em Arial, Helvetica, sans-serif;
-	text-transform:uppercase;
-	text-shadow: 2px 2px 2px #999;
-
-	/* Fix for IE's lack of text-shadow support :colbert: */
-	zoom: 1;
-	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#cccccc)
-		progid:DXImageTransform.Microsoft.Glow(Strength=5, Color=#eeeeee);
+    font-weight:bold;
+    color:#fff;
+    text-align:center;
+    padding:6px;
+    text-decoration:none;
+    //text-transform:uppercase;
 }
 
-#navbar a:hover,
-#navbar a:focus
+#navbar a:hover, a:active
 {
-	color:#fff;
-	#color:#b82020;
+    background-color:#000; 
 }
 
+/* Content gets a white background and some attractive padding */
+#content
+{
+    border-bottom-right-radius:20px;
+    border-bottom-left-radius:20px;
+    border-top-right-radius:20px;
+    border-top-left-radius:20px;
+    background-color:#fff;
+    margin:10px;
+    padding:10px;
+}
+
+/* Default (unless over-riden) table styles */
+#content table
+{
+    border-collapse: collapse;
+}
+#content th
+{
+    color:#fff;
+    background-color:#444;
+    padding:3px;
+    padding-left:6px;
+    padding-right:6px;
+}
+
+.rounded-left
+{
+    border-bottom-left-radius:5px;
+    border-top-left-radius:5px;
+}
+
+.rounded-right
+{
+    border-bottom-right-radius:5px;
+    border-top-right-radius:5px;
+}
+
+#content td
+{
+    padding-left:6px;
+    padding-right:6px;
+}
+
+/* Stylization for playlist specifics */
+.playing
+{
+    background-color:#666;
+    color:#fff;
+}

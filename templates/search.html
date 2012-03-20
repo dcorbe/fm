@@ -2,9 +2,12 @@
 
 <head>
 <title>basement.fm: Search for your favorite music!</title>
+{% include 'common_header.html' %}
 </head>
-
+ 
 <body>
+{% include 'header.html' %}
+
 <div id=search>
   <form method="post", action="{{ url_for('search') }}">
     Artist: <input type="text" name="artist" /><br />
@@ -12,6 +15,8 @@
     <input type="submit" />
   </form>
 </div>
+
+{% include 'footer.html' %}
 </body>
 
 </html>

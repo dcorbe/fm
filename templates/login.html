@@ -1,12 +1,18 @@
 <head>
 <title>Login</title>
+{% include 'common_header.html' %}
 </head>
 
 <body>
+{% include 'header.html' %}
+
+<div id="login">
 <form method="post" action="/login">
 Login: <input type="text" id="username" name="username" /><br>
 Password: <input type="password" id="password" name="password" /><br>
 <input type="submit" />
-
 </form>
+</div>
+
+{% include 'footer.html' %}
 </body>
