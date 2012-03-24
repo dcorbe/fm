@@ -60,7 +60,7 @@ def ices_get_next ():
     # Check to see if anything is in the request queue
     db = conn.cursor()
 
-    db.execute("SELECT i_song,id,i_user FROM requests")
+    db.execute("SELECT i_song,id,i_user FROM requests ORDER BY id")
 
     if db.rowcount > 0:
         rows = db.fetchall()
