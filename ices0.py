@@ -88,7 +88,7 @@ def ices_get_next ():
     return song['path']
 
 # This is the function that manages the playlist history
-def add_to_history(i_song, i_user=1):
+def add_to_history(i_song, i_user=0):
     db = conn.cursor()
 
     db.execute("INSERT INTO history (i_song, i_user) VALUES (%s, %s)", 

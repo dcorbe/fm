@@ -1,9 +1,12 @@
 from flask import Flask, session, request, redirect, url_for, render_template
 from werkzeug import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
+from xml.etree.ElementTree import Element, SubElement, tostring
+from xml.dom.minidom import parseString
 
 from DB import *
 from forum import forum
+from simplemachines import User
 
 app = Flask(__name__)
 app.register_blueprint(forum)
@@ -39,6 +42,56 @@ def playlist():
     return render_template("playlist.html", 
                            history=history, playing=playing, requests=requests)
 
+@app.route('/xml/playlist')
+def xmlrpc_playlist():
+    db = conn.cursor()
+    history = [ ]
+    requests = [ ]
+
+    db.execute("SELECT * FROM history ORDER BY id DESC")
+    rows = db.fetchall()
+    for row in rows:
+        i_user = row[2]
+        history.append(get_song(row[1], i_user=i_user))
+
+    # Get the request list
+    db.execute("SELECT * FROM requests ORDER BY id DESC")
+    rows = db.fetchall()
+    for row in rows:
+        i_user = row[2]
+        requests.append(get_song(row[0], i_user=i_user))
+
+    # Last song in this history list is what's currently playing
+    playing = history.pop()
+
+    # Create the XML
+    root = Element('playlist')
+    parent = SubElement(root, "nowplaying")
+    child = SubElement(parent, "song")
+    attribs = {'artist': playing['artist'],
+              'title': playing['title'],
+              'requestby': playing['username']}
+    child.attrib = attribs
+
+    parent = SubElement(root, "history")
+    for song in history:
+        child = SubElement(parent, "song")
+        attribs = {'artist': song['artist'],
+                   'title': song['title'],
+                   'requestby': song['username']}
+        child.attrib = attribs
+
+    parent = SubElement(root, "upcoming")
+    for song in requests:
+        child = SubElement(parent, "song")
+        attribs = {'artist': song['artist'],
+                   'title': song['title'],
+                   'requestby': song['username']}
+        child.attrib = attribs
+
+    # FIXME: there literally has to be a better way to do this.
+    return parseString(tostring(root)).toprettyxml()
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     db = conn.cursor()
@@ -55,8 +108,13 @@ def search():
             title = '%'
 
         # Execute the search
-        db.execute("SELECT * FROM songs WHERE artist LIKE %s AND title LIKE %s",
-                   (artist, title))
+        if request.form['exact']:
+            db.execute("SELECT * FROM songs WHERE artist LIKE %s AND title LIKE %s",
+                       ('{0}'.format(artist), '{0}'.format(title)))
+        else:
+            db.execute("SELECT * FROM songs WHERE artist LIKE %s AND title LIKE %s",
+                       ('%{0}%'.format(artist), '%{0}%'.format(title)))
+
         rows = db.fetchall()
         for row in rows:
             results.append({'i_song': row[0],
@@ -142,15 +200,20 @@ def get_song(i_song, i_user=False):
     songs = db.fetchall()
     song = songs[0]
     
-    result = {'i_song': song[0],
-            'artist': song[1].decode('UTF-8'),
-            'title': song[2].decode('UTF-8'),
-            'path': song[3]}
+    try:
+        result = {'i_song': song[0],
+                  'artist': song[1].decode('UTF-8'),
+                  'title': song[2].decode('UTF-8'),
+                  'path': song[3]}
+    except:
+        result = {'i_song': song[0],
+                  'artist': song[1],
+                  'title': song[2],
+                  'path': song[3]}
 
-    # Populate user information if available
-    if i_user:
-        result['i_user'] = i_user
-        result['username'] = get_username(i_user)
+    # Populate user information
+    result['i_user'] = i_user
+    result['username'] = get_username(i_user)
 
     # Populate rating information if available
     if i_user:
@@ -164,35 +227,25 @@ def get_song(i_song, i_user=False):
 # This could be repalced by the equivalent class in the forum code
 #
 def get_username(i_user):
-    db = conn.cursor()
-
-    db.execute("SELECT * FROM users WHERE id = %s", (i_user))
-    users = db.fetchall()
-    user = users[0]
-
-    return user[1]
+    user = User(i_user)
+    return user.username
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    db = conn.cursor()
+    user = User();
 
     if request.method == "POST":
-        db.execute("SELECT * FROM users WHERE username = '{0}'"
-                   .format(request.form['username']))
-        row = db.fetchone()
+        user.get_user(request.form['username'])
 
-        try:
-            storedpass = row[2]
-        except TypeError:
+        if user.username == 'Random':
             return "User not in database."
 
-        if storedpass == request.form['password']:
+        if user.passcomp(request.form['password']) == True:
             session['username'] = request.form['username']
-            session['i_user'] = row[0]
+            session['i_user'] = user.id
             return redirect(url_for('playlist'))
         else:
             return "Login Incorrect"
-
     else:
         return render_template('login.html')
 

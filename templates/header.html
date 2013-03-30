@@ -2,11 +2,12 @@
   <div id="header"></div>
   <div id="navbar">
     <ul>
-      <li><a href="/playlist">Playlist</a></li>
-      <li><a href="/static/player-popup.html" target="_blank">Listen</a></li>
-      <li><a href="/playlist">Blog</a></li>
-      <li><a href="/forum">Forums</a></li>
-      <li class=float-right><a href="/search">Search</a></li>
+      <li><a href="http://www.corbe.net/blog">Home</a></li>
+      <li><a href="http://www.corbe.net/forum">Forum</a></li>
+      <li><a href="http://www.corbe.net/wiki">Wiki</a></li>
+      <li><a href="{{ url_for('playlist') }}">Playlist</a></li>
+      <li><a href="{{ url_for('static', filename='player-popup.html') }}" target="_blank">Listen</a></li>
+      <li class=float-right><a href="{{ url_for('search') }}">Search</a></li>
     </ul>
   </div>
   <div id="content">

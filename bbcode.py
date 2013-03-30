@@ -5,7 +5,7 @@ class postmarkup_wrapper():
     this ensures that the right options are always passed """
 
     def __init__(self):
-        self.bbcode = postmarkup.create(annotate_links=False)
+        self.bbcode = postmarkup.create(annotate_links=False, use_pygments=False)
 
     def render(self, args):
         return self.bbcode(args)

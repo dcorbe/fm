@@ -21,7 +21,7 @@
 	<tr>
 	  <td>{{ song['artist'] }}</td>
 	  <td>{{ song['title'] }}</td>
-	  <td><a href=/request/{{ song['i_song'] }}>Request</a></td>
+	  <td><a href="{{ url_for('song_request', i_song=song['i_song']) }}">Request</a></td>
 	</tr>
 	{% endfor %}
       </tbody>

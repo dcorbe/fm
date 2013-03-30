@@ -12,7 +12,8 @@
   <form method="post", action="{{ url_for('search') }}">
     Artist: <input type="text" name="artist" /><br />
     Title: <input type="text" name="title" /><br />
-    <input type="submit" />
+    <input type="checkbox" name="exact" value="True">Exact Match<br />
+    <input type="submit" /><br />
   </form>
 </div>
 
