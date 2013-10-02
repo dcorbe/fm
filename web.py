@@ -3,6 +3,9 @@ from werkzeug import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
 from xml.etree.ElementTree import Element, SubElement, tostring
 from xml.dom.minidom import parseString
+import hashlib
+import random
+import string
 
 from DB import *
 from simplemachines import User
@@ -250,10 +253,26 @@ def login():
         return render_template('login.html')
 
 if __name__ == '__main__':
+    # If we're running from the command line we want debugging info
     app.debug = True
-    app.secret_key = '2b6a57457a69559a69678bca4d5ab023'
+
+    # This generates a secure application key which changes every time
+    # the app is restarted.
+    s = ''
+    s = s + s.join(random.choice(string.ascii_uppercase + 
+                                         string.ascii_lowercase +
+                                         string.digits))
+    app.secret_key = hashlib.md5('application' + s).hexdigest()
+
+    # Start the application
     app.run(host='0.0.0.0', port=9001)
 else:
-    app.secret_key = '2b6a57457a69559a69678bca4d5ab023'
+    # This generates a secure application key which changes every time
+    # the app is restarted.
+    s = ''
+    s = s + s.join(random.choice(string.ascii_uppercase + 
+                                         string.ascii_lowercase +
+                                         string.digits))
+    app.secret_key = hashlib.md5('application' + s).hexdigest()
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
