@@ -7,3 +7,7 @@
 * Integration between music side and forum side
 * Should be able to post comments on songs, comments translate to threads in a special forum
 
+*** DESIGN ***
+* Forum topics should be grid instead of table
+
+

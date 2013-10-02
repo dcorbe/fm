@@ -1,5 +1,6 @@
 from DB import *
-from users import *
+#from users import *
+from simplemachines import *
 import time
 
 class Post():

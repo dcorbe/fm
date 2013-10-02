@@ -5,8 +5,8 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 from xml.dom.minidom import parseString
 
 from DB import *
-from forum import forum
 from simplemachines import User
+from forum import forum
 
 app = Flask(__name__)
 app.register_blueprint(forum)
