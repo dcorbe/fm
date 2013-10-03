@@ -1,0 +1,9 @@
+
+#
+# This controls the MySQL Database access.  Self-explanatory
+#
+[database]
+host = mysql.someisp.com
+user = myuser
+pass = mypass
+db = site

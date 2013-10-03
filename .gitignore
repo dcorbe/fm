@@ -1,6 +1,7 @@
 *.*~
 *.pyc
 *.log
+site.conf
 static/antennae.jpg
 static/carina.jpg
 static/carousel.js
