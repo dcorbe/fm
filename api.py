@@ -36,3 +36,11 @@ def posts_bythread(i_thread):
 
     return posts
 
+#
+# TODO consult the settings file for the default redirect information
+#      in any case we should make a better effort to ask the user what
+#      they would like to do on redirects.
+def redirect_url(request, default='playlist'):
+    return request.args.get('next') or \
+           request.referrer or \
+           url_for(default)

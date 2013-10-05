@@ -7,6 +7,7 @@ import hashlib
 import random
 import string
 
+import api
 from DB import *
 from simplemachines import User
 from forum import forum
@@ -250,7 +251,7 @@ def login():
         if user.passcomp(request.form['password']) == True:
             session['username'] = request.form['username']
             session['i_user'] = user.id
-            return redirect(url_for('playlist'))
+            return redirect(api.redirect_url(request))
         else:
             return "Login Incorrect"
     else:
