@@ -4,7 +4,8 @@ from simplemachines import *
 import time
 
 class Post():
-    """ This is a base class for "posts" """
+    """ This is a base class for "posts" 
+    an i_thread of 0 has special meaning:  It's a blog post"""
 
     queryPostSelect = """
         SELECT *
@@ -16,6 +17,11 @@ class Post():
             (subject, post, ts, i_user)
         VALUES
             (%s, %s, %s, %s)"""
+
+    queryByThread = """
+        SELECT *
+        FROM posts
+        WHERE i_thred = %s"""
 
     def __init__(self, i_post=None):
         self.id = 0;
@@ -58,3 +64,5 @@ class Post():
                                           self.i_user.id))
 
         self.id = db.lastrowid
+
+

@@ -10,10 +10,12 @@ import string
 from DB import *
 from simplemachines import User
 from forum import forum
+from blog import blog
 from config import *
 
 app = Flask(__name__)
 app.register_blueprint(forum)
+app.register_blueprint(blog)
 app.jinja_env.autoescape = False
 Config = Config()
 conn = DB()

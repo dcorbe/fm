@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Test</title>
+{% include 'common_header.html' %}
+
+</head>
+
+<body>
+  {% include 'header.html' %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9">
+	{% for post in posts %}
+	<div class="post_subject">
+	  <h1>{{post.subject}}</h1>
+	</div>
+	<div class="post_meta">
+	  <em>Posted on {{ time.ctime(post.ts) }} by: {{post.i_user.username }}</em>
+	</div>
+	<hr>
+	<div class="post_body">
+	  <p>{{post.post}}</p>
+	</div>
+	{% endfor %}
+      </div>
+      <div class="col-lg-3">
+	<div class="row">
+	  <p>
+	    <center>
+	      <a href=http://www.twitter.com/dcorbe><img src=http://www.corbe.net/static/twitter.png></a>
+	      <a href=http://www.facebook.com/dcorbe><img src=http://www.corbe.net/static/facebook.png></a>
+	      <a href=http://www.linkedin.com/in/dcorbe><img src=http://www.corbe.net/static/linkedin.png></a>
+	      <br/>
+	      <a href=http://www.youtube.com/dcorbe><img src=http://www.corbe.net/static/youtube.png></a>
+	    </center>
+	  </p>
+	</div>
+	<div class="row">
+<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/dcorbe" data-widget-id="352790903020208130" data-chrome="noscrollbar">Tweets by @dcorbe</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div>
+      </div>
+    </div>
+</body>
+</html>

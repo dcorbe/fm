@@ -10,4 +10,5 @@
 *** DESIGN ***
 * Forum topics should be grid instead of table
 
-
+*** SEO ***
+* Generate meta tags based on the post information (thread.html, blog.html)

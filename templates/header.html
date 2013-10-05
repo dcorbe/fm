@@ -6,11 +6,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">basement.fm</a>
+      <a class="navbar-brand" href="/">corbe.net</a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-	<li><a href="#">Home</a></li>
+	<li><a href="{{ url_for('blog.blog_main') }}">Home</a></li>
 	<li><a href="{{ url_for('forum.board_main') }}">Forum</a></li>
 	<li><a href="{{ url_for('playlist') }}">Playlist</a></li>
 	<li><a href="{{ url_for('static', filename='player-popup.html') }}" target="_blank">Listen</a></li>
