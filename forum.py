@@ -26,7 +26,7 @@ def board_main():
         else:
             return redirect(url_for('forum.topics'))
     else:
-        return redirect(url_for('login'))
+        return redirect(api.redirect_url(request))
 
 @forum.route('/topics', methods=['GET', 'POST'])
 def topics():
