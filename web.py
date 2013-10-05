@@ -23,7 +23,7 @@ conn = DB()
 
 @app.route('/')
 def main():
-    return render_template('landing.html')
+    return render_template('landing.html', api=api)
 
 @app.route('/playlist')
 def playlist():
@@ -47,7 +47,7 @@ def playlist():
     # Last song in this history list is what's currently playing
     playing = history.pop()
 
-    return render_template("playlist.html", 
+    return render_template("playlist.html", api=api,
                            history=history, playing=playing, requests=requests)
 
 @app.route('/xml/playlist')
@@ -130,9 +130,9 @@ def search():
                          'title': row[2].decode('UTF-8'),
                          'path': row[3]})
 
-        return render_template("searchresults.html", results=results)
+        return render_template("searchresults.html", results=results, api=api)
     else:
-        return render_template("search.html")
+        return render_template("search.html", api=api)
 
 @app.route('/request/<i_song>')
 def song_request(i_song=False):
@@ -238,6 +238,14 @@ def get_username(i_user):
     user = User(i_user)
     return user.username
 
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    if api.logged_in(session):
+        del session['username']
+        session['i_user'] = 0
+
+    return redirect(api.redirect_url(request))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     user = User();
@@ -255,7 +263,7 @@ def login():
         else:
             return "Login Incorrect"
     else:
-        return render_template('login.html')
+        return redirect(api.redirect_url(request))
 
 if __name__ == '__main__':
     # If we're running from the command line we want debugging info

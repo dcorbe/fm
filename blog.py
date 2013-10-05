@@ -3,6 +3,7 @@ from werkzeug import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
 
 import time
+import api
 
 from DB import *
 from bbcode import *
@@ -19,5 +20,5 @@ bbcode = postmarkup_wrapper()
 @blog.route('/blog')
 def blog_main():
     posts = api.posts_bythread(0)
-    return render_template('blog.html', posts=posts, time=time)
+    return render_template('blog.html', posts=posts, time=time, api=api)
 

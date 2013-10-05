@@ -26,7 +26,14 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
       </ul>
-      <form class="navbar-form navbar-right" action="#">
+      {% if api.logged_in(session) %}
+      <form class="navbar-form navbar-right" action="{{ url_for('logout') }}" method="post">
+        <div class="form-group">
+          <button type="submit" class="btn btn-danger">Sign out</button>
+	</div>
+      </form>
+      {% else %}
+      <form class="navbar-form navbar-right" action="{{ url_for('login') }}" method="post">
         <div class="form-group">
           <input type="text" placeholder="Username" class="form-control" name="username">
         </div>
@@ -35,6 +42,7 @@
         </div>
         <button type="submit" class="btn btn-success">Sign in</button>
       </form>
+      {% endif %}
     </div><!--/.navbar-collapse -->
   </div>
 </div>

@@ -3,10 +3,12 @@ from post import *
 from user import *
 from topics import *
 
-def logged_in():
+def logged_in(session):
     if 'username' in session:
+        print "RETURNING TRUE"
         return True
     else:
+        print "RETURNING FALSE"
         return False
 
 #
@@ -43,4 +45,4 @@ def posts_bythread(i_thread):
 def redirect_url(request, default='playlist'):
     return request.args.get('next') or \
            request.referrer or \
-           url_for(default)
+           '/blog'
