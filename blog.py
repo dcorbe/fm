@@ -19,7 +19,7 @@ bbcode = postmarkup_wrapper()
 
 @blog.route('/blog')
 def blog_main():
-    posts = api.posts_bythread(0)
+    posts = api.blog_posts()
     return render_template('blog.html', posts=posts, time=time, api=api,
                            bbcode=bbcode)
 

@@ -1,5 +1,4 @@
 from DB import *
-#from users import *
 from users import *
 import time
 
@@ -17,11 +16,6 @@ class Post():
             (subject, post, ts, i_user)
         VALUES
             (%s, %s, %s, %s)"""
-
-    queryByThread = """
-        SELECT *
-        FROM posts
-        WHERE i_thred = %s"""
 
     def __init__(self, i_post=None):
         self.id = 0;

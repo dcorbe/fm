@@ -38,6 +38,28 @@ def posts_bythread(i_thread):
 
     return posts
 
+def blog_posts():
+    result = { }
+    posts = [ ]
+
+    try:
+        db = conn.cursor()
+    except NameError:
+        conn = DB()
+        db = conn.cursor()
+
+    db.execute("""SELECT id
+                  FROM posts
+                  WHERE blog = 'Y'""")
+
+    rows = db.fetchall()
+
+    for row in rows:
+        result = Post(row[0])
+        posts.append(result)
+
+    return posts
+
 #
 # TODO consult the settings file for the default redirect information
 #      in any case we should make a better effort to ask the user what
