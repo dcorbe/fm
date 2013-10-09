@@ -115,12 +115,8 @@ def search():
         if title == '':
             title = '%'
 
-        # Execute the search
-        if request.form['exact']:
-            db.execute("SELECT * FROM songs WHERE artist LIKE %s AND title LIKE %s",
-                       ('{0}'.format(artist), '{0}'.format(title)))
-        else:
-            db.execute("SELECT * FROM songs WHERE artist LIKE %s AND title LIKE %s",
+        # TODO: exact matching
+        db.execute("SELECT * FROM songs WHERE artist LIKE %s AND title LIKE %s",
                        ('%{0}%'.format(artist), '%{0}%'.format(title)))
 
         rows = db.fetchall()
