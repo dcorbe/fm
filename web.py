@@ -9,7 +9,7 @@ import string
 
 import api
 from DB import *
-from simplemachines import User
+from users import User
 from forum import forum
 from blog import blog
 from config import *

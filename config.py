@@ -6,6 +6,7 @@ class Config():
         self.config.read(configfile)
         self.configfile = configfile
         self.database = dict()
+        self.user = dict()
 
         if self.config.has_section('database'):
             try:
@@ -18,4 +19,10 @@ class Config():
                 self.database['host'] = None
                 self.database['pass'] = None
                 self.database['db'] = None
+
+        if self.config.has_section('user'):
+            try:
+                self.user['backend'] = self.config.get('user', 'backend')
+            except:
+                self.user['backend'] = None
 

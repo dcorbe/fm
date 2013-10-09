@@ -7,3 +7,12 @@ host = mysql.someisp.com
 user = myuser
 pass = mypass
 db = site
+
+#
+# User back-end information.  Currently supported: 
+#
+# mysql - Stores user and group information in a MySQL database
+# simplemachines - Use a simplemachines MySQL forum database
+#
+[user]
+backend = mysql
