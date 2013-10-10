@@ -42,7 +42,7 @@ class Forum():
         if not i_forum:
             return
 
-        self.id = i_forum
+        self.id = int(i_forum)
 
         db.execute(self.queryForumSelect, (self.id))
         rows = db.fetchall()
@@ -62,7 +62,7 @@ class Forum():
         db.execute(self.queryByShortname, (string))
         row = db.fetchone()
 
-        self.id = row[0]
+        self.id = int(row[0])
         self.name = row[1]
         self.description = row[2]
         self.shortname = row[3]

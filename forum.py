@@ -36,7 +36,7 @@ def search(searchstring):
 
     # Try by int() first.
     try:
-        f = Forum(id)
+        f = Forum(searchstring)
         matched = True
     except:
         f = Forum()
@@ -45,7 +45,8 @@ def search(searchstring):
         f.byshortname(searchstring)
         f.open(f.id)
         matched = True
-        
+    
+    print "FORUM: {0}".format(f.id)
     return render_template('topics.html', api=api, forum=f)
 
 
