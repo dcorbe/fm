@@ -7,6 +7,7 @@ class Config():
         self.configfile = configfile
         self.database = dict()
         self.user = dict()
+        self.forum = dict()
 
         if self.config.has_section('database'):
             try:
@@ -24,5 +25,10 @@ class Config():
             try:
                 self.user['backend'] = self.config.get('user', 'backend')
             except:
-                self.user['backend'] = None
+                self.user['backend'] = mysql
 
+        if self.config.has_section('forum'):
+            try:
+                self.forum['index'] = int(self.config.get('forum', 'index'))
+            except:
+                self.user['index'] = 0

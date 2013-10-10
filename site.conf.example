@@ -13,6 +13,23 @@ db = site
 #
 # mysql - Stores user and group information in a MySQL database
 # simplemachines - Use a simplemachines MySQL forum database
+# 
+# Default: mysql
 #
 [user]
 backend = mysql
+
+#
+# Forum configuration directives
+#
+[forum]
+
+#
+# This setting controls whether or not to render the forum index.
+#
+# If set to 1, the forum index will be rendered.
+# If set to 0, the user's subscribed topics will be rendered (ala egosearch).
+#
+# Default: 0
+#
+index=1

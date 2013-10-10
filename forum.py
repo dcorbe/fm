@@ -5,7 +5,7 @@ from DB import *
 from bbcode import *
 from topics import *
 from post import *
-from settings import *
+from config import *
 from forums import *
 from subscriptions import *
 import api
@@ -15,13 +15,12 @@ forum = Blueprint('forum', __name__)
 
 conn = DB()
 bbcode = postmarkup_wrapper()
-settings = Settings()
+config = Config()
 
 @forum.route('/forum')
 def board_main():
     if 'username' in session:
-        dict = settings.general()
-        if dict['render_forums'] > 0:
+        if config.forum['index']:
             return render_template('forum.html', api=api)
         else:
             return redirect(url_for('forum.topics'))
