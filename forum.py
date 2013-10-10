@@ -23,7 +23,7 @@ def board_main():
         if config.forum['index']:
             return render_template('forum.html', api=api)
         else:
-            return redirect(url_for('forum.topics'))
+            return redirect(url_for('forum.egosearch'))
     else:
         return redirect(api.redirect_url(request))
 
@@ -35,6 +35,15 @@ def topics():
     s = Subscription(session['i_user'])
     
     return render_template('topics.html', subscriptions=s, api=api)
+
+@forum.route('/egosearch', methods=['GET', 'POST'])
+def egosearch():
+    if not 'username' in session:
+        return redirect(url_for('login'))
+
+    s = Subscription(session['i_user'])
+    
+    return render_template('egosearch.html', subscriptions=s, api=api)
 
 @forum.route('/thread/<i_thread>', methods=['GET', 'POST'])
 def threadview(i_thread):
