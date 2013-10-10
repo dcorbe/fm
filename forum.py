@@ -27,6 +27,28 @@ def board_main():
     else:
         return redirect(api.redirect_url(request))
 
+@forum.route('/forum/<searchstring>')
+def search(searchstring):
+    #
+    # Determine the name of the forum.
+    #
+    matched = False
+
+    # Try by int() first.
+    try:
+        f = Forum(id)
+        matched = True
+    except:
+        f = Forum()
+
+    if not matched:
+        f.byshortname(searchstring)
+        f.open(f.id)
+        matched = True
+        
+    return render_template('topics.html', api=api, forum=f)
+
+
 @forum.route('/topics', methods=['GET', 'POST'])
 def topics():
     if not 'username' in session:
