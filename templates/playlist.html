@@ -30,31 +30,7 @@
 	      <td>{{ song['title'] }}</td>
 	      <td>{{ song['username'] }}</td>
 	      <td>
-		{% if song['rating'] == 1 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="1" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="1"/>
-		{% endif %}	      
-		{% if song['rating'] == 2 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="2" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="2"/>
-		{% endif %}	      
-		{% if song['rating'] == 3 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="3" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="3"/>
-		{% endif %}	      
-		{% if song['rating'] == 4 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="4" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="4"/>
-		{% endif %}	      
-		{% if song['rating'] == 5 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="5" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="5"/>
-		{% endif %}	      
+		<input type="number" class="rating" name="{{ song['i_song'] }}" value="{{ song['rating'] }}" data-max="4" data-min="0"/>
 	      </td>
 	      <td>{{ song['average'] }}/5 ({{ song['votes'] }} votes)<td>
 	    </tr>
@@ -64,31 +40,7 @@
 	      <td>{{ playing['title'] }}</td>
 	      <td>{{ playing['username'] }}</td>
 	      <td>
-		{% if playing['rating'] == 1 %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="1" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="1"/>
-		{% endif %}	      
-		{% if playing['rating'] == 2 %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="2" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="2"/>
-		{% endif %}	      
-		{% if playing['rating'] == 3 %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="3" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="3"/>
-		{% endif %}	      
-		{% if playing['rating'] == 4 %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="4" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="4"/>
-		{% endif %}	      
-		{% if playing['rating'] == 5 %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="5" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ playing['i_playing'] }}" value="5"/>
-		{% endif %}	      
+		<input type="number" class="rating" name="{{ playing['i_playing'] }}" value="{{ playing['rating'] }}" data-max="4" data-min="0"/>
 	      </td>
 	      <td>{{ playing['average'] }}/5 ({{ playing['votes'] }} votes)</td>
 	    </tr>
@@ -98,31 +50,7 @@
 	      <td>{{ song['title'] }}</td>
 	      <td>{{ song['username'] }}</td>
 	      <td>
-		{% if song['rating'] == 1 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="1" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="1"/>
-		{% endif %}	      
-		{% if song['rating'] == 2 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="2" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="2"/>
-		{% endif %}	      
-		{% if song['rating'] == 3 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="3" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="3"/>
-		{% endif %}	      
-		{% if song['rating'] == 4 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="4" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="4"/>
-		{% endif %}	      
-		{% if song['rating'] == 5 %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="5" checked="checked"/>
-		{% else %}
-		<input type="radio" class="auto-submit-star" name="{{ song['i_song'] }}" value="5"/>
-		{% endif %}	      
+		<input type="number" class="rating" name="{{ song['i_song'] }}" value="{{ song['rating'] }}" data-max="4" data-min="0"/>
 	      </td>
 	      <td>{{ song['average'] }}/5 ({{ song['votes'] }} votes)</td>
 	    </tr>
