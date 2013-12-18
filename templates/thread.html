@@ -18,7 +18,7 @@
 	  <div class="col-lg-2">{{ post.i_user.username }}</div>
 	  <div class="col-lg-10">
 	    <div class="panel panel-primary">
-	      <div class="panel-heading">#{{ thread.sequence }} {{ time.ctime(post.ts) }}</div>
+	      <div class="panel-heading">#{{ thread.sequence }} {{ api.unixts(post.ts) }}</div>
 	      <div class="panel-body">{{ bbcode.render(post.post) }}</div>
 	    </div>
 	  </div>
