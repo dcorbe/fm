@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Compose a Post</title>
+{% include 'common_header.html' %}
+
+<script> 
+$(document).ready(function () { 
+  $('#wbbeditor').wysibb({
+    themePrefix: '/static/wysibb/theme/'
+  });
+})
+</script>
+</head>
+
+<body>
+  <!-- header -->
+  {% include 'header.html' %}
+  <!-- end of header -->
+
+  <br />
+  <div class="container">
+    <form role="form" method="post" action="{{ url_for('compose.post') }}">
+      <div class="form-group">
+	<label for="subject">Subject:</label>
+	<input type="text" id="subject" name="subject" size="61" />
+      </div>
+	<textarea id="wbbeditor" name="postbody" rows="6"></textarea>
+      <input type="submit" class="btn btn-success" />
+  </div>
+</form>
+
+</body>
+</html>

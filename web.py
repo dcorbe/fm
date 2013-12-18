@@ -10,6 +10,7 @@ import string
 import api
 from DB import *
 from users import User
+from composer import compose
 from forum import forum
 from blog import blog
 from config import *
@@ -17,6 +18,7 @@ from config import *
 app = Flask(__name__)
 app.register_blueprint(forum)
 app.register_blueprint(blog)
+app.register_blueprint(compose)
 app.jinja_env.autoescape = False
 Config = Config()
 conn = DB()
