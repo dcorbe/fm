@@ -1,3 +1,5 @@
+import time
+
 from DB import *
 from post import *
 from user import *
@@ -85,3 +87,15 @@ def categories():
 def forums(i_category=0):
     f = Forum()
     return f.forums(i_category)
+
+#
+# This converts a unix timestamp to a readable date.
+# The fmt argument takes its values from time.strftime().  See:
+# http://docs.python.org/2/library/datetime.html#strftime-strptime-behavior
+#
+def unixts(ts=0, fmt=None):
+    if not fmt:
+        config = Config()
+        fmt = config.forum['fmt']
+
+    return time.strftime(fmt, time.localtime(ts));

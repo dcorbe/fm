@@ -33,3 +33,10 @@ backend = mysql
 # Default: 0
 #
 index=1
+
+#
+# This setting controls the date/time formatting.  See:
+# http://docs.python.org/2/library/datetime.html#strftime-strptime-behavior
+# for possible values.  
+#
+fmt=%A, %B %d, %Y

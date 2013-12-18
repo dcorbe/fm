@@ -43,7 +43,7 @@
 	<tr>
 	  <td><div id="subject"><a href="/thread/{{ thread.linkhash }}">{{ thread.subject }}</a></div></td>
 	  <td><div id="replies">{{ thread.postcount - 1 }}</div></td>
-	  <td><div id="lastpost">{{ thread.bumped }}</div></td>
+	  <td><div id="lastpost">{{ api.unixts(thread.bumped) }}</div></td>
 	</tr>
 	{% endfor %}
       </tbody>

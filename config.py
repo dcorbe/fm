@@ -32,3 +32,9 @@ class Config():
                 self.forum['index'] = int(self.config.get('forum', 'index'))
             except:
                 self.user['index'] = 0
+                
+            try:
+                self.forum['fmt'] = self.config.get('forum', 'fmt')
+            except:
+                self.forum['fmt'] = '%A, %B %d, %Y'
+
