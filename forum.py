@@ -19,13 +19,10 @@ config = Config()
 
 @forum.route('/forum')
 def board_main():
-    if 'username' in session:
-        if config.forum['index']:
-            return render_template('forum.html', api=api)
-        else:
-            return redirect(url_for('forum.egosearch'))
+    if config.forum['index']:
+        return render_template('forum.html', api=api)
     else:
-        return redirect(api.redirect_url(request))
+        return redirect(url_for('forum.egosearch'))
 
 @forum.route('/forum/<searchstring>')
 def search(searchstring):

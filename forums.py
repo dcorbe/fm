@@ -18,6 +18,20 @@ class Forum():
         WHERE shortname = %s
     """
 
+    queryCategories = """
+        SELECT id, name, description, shortname
+        FROM forums
+        WHERE type='category'
+        ORDER BY `order`
+    """
+
+    queryForumsByCategory = """
+        SELECT id, name, description, shortname
+        FROM forums
+        WHERE i_parent = %s
+        ORDER BY `order`
+    """
+
     def __init__(self, i_forum=None):
         self.id = 0
         self.threads = [ ]
@@ -66,3 +80,46 @@ class Forum():
         self.name = row[1]
         self.description = row[2]
         self.shortname = row[3]
+
+    def categories(self):
+        categories = [ ]
+
+        try:
+            db = conn.cursor()
+        except NameError:
+            conn = DB()
+            db = conn.cursor()
+            
+        db.execute(self.queryCategories)
+        rows = db.fetchall()
+
+        for row in rows:
+            categories.append({'id': row[0],
+                               'name': row[1],
+                               'description': row[2],
+                               'shortname': row[3]})
+
+        return categories
+
+    def forums(self, i_category=0):
+        forums = [ ]
+
+        try:
+            db = conn.cursor()
+        except NameError:
+            conn = DB()
+            db = conn.cursor()
+
+        if i_category < 1:
+            return None
+
+        db.execute(self.queryForumsByCategory, (i_category))
+        rows = db.fetchall()
+
+        for row in rows:
+            forums.append({'id': row[0],
+                           'name': row[1],
+                           'description': row[2],
+                           'shortname': row[3]})
+
+        return forums

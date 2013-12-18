@@ -2,17 +2,17 @@ from DB import *
 from post import *
 from user import *
 from topics import *
+from forums import *
 
 def logged_in(session):
     if 'username' in session:
-        print "RETURNING TRUE"
         return True
     else:
-        print "RETURNING FALSE"
         return False
 
 #
 # TODO: NEEDS PAGINATION
+# FIXME: really?  We're running DB queries here?
 #
 def posts_bythread(i_thread):
     result = { }
@@ -38,6 +38,9 @@ def posts_bythread(i_thread):
 
     return posts
 
+#
+# FIXME really?  We're running DB queries here?
+#
 def blog_posts():
     result = { }
     posts = [ ]
@@ -68,3 +71,17 @@ def redirect_url(request, default='playlist'):
     return request.args.get('next') or \
            request.referrer or \
            '/blog'
+
+#
+# This returns the list of categories to the template system
+#
+def categories():
+    f = Forum()
+    return f.categories()
+
+#
+# Return a list of forums by category
+#
+def forums(i_category=0):
+    f = Forum()
+    return f.forums(i_category)
