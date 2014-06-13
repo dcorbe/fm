@@ -99,3 +99,26 @@ def unixts(ts=0, fmt=None):
         fmt = config.forum['fmt']
 
     return time.strftime(fmt, time.localtime(ts));
+
+#
+# This should be run from a python shell periodically to reindex
+# post count statistics. 
+#
+def reindex():
+    f = Forum()
+
+    threads = 0;
+    posts = 0;
+    categories = f.categories()
+    for category in categories:
+        forums = f.forums(category['id'])
+        
+        for forum in forums:
+            f.open(forum['id'])
+            threads = threads + f.threadcount
+            
+            for thread in f.threads:
+                posts = posts + thread.postcount
+                thread.updatecount(thread.postcount)
+
+    print "Indexed {0} posts in {1} threads".format(posts, threads)

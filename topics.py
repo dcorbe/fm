@@ -76,6 +76,11 @@ class Topic():
 	    %s
 	)"""
 
+    queryUpdateCount = """
+        UPDATE threads
+        SET posts=%s
+        WHERE id = %s"""
+
     def __init__(self, i_topic=None):
         self.id = None
         self.posts = [ ]
@@ -165,8 +170,25 @@ class Topic():
         # Refresh post data
         p.open(p.id)
 
+        # Update post count for posterity
+        self.postcount = self.postcount + 1
+        self.updatecount(self.id, self.postcount)
+
         # Link post to this thread
         self.posts.append(p)
+
+    def updatecount(self, i_thread=0, count=0):
+        if count == 0 or i_thread == 0:
+            return 0
+
+        try:
+            db = conn.cursor()
+        except NameError:
+            conn = DB()
+            db = conn.cursor()
+
+        db.execute(self.queryUpdateCount, (count, i_thread))
+        return(self.postcount)
 
     def link(self, post):
         """ This is used to link a post to this thread """
@@ -241,12 +263,6 @@ class Topic():
         except NameError:
             conn = DB()
             db = conn.cursor()
-
-        #db.execute("SELECT count(*) FROM threads")
-        #row = db.fetchone()
-        #count = int(row[0])
-        #count = count + 1
-        #db.execute("UPDATE stats SET count={0}".format(count))
 
         db.execute(self.queryNewThread, (subject))
         self.id = db.lastrowid
