@@ -276,7 +276,7 @@ if __name__ == '__main__':
     app.secret_key = hashlib.md5('application' + s).hexdigest()
 
     # Start the application
-    app.run(host='0.0.0.0', port=9001)
+    app.run(host='0.0.0.0', port=9002)
 else:
     # This generates a secure application key which changes every time
     # the app is restarted.
