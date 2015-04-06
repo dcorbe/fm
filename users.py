@@ -70,9 +70,14 @@ class User():
             
         row = db.fetchone()
 
-        self.id = i_user
-        self.username = row[1]
-        self.password = row[2]
+        try:
+            self.id = i_user
+            self.username = row[1]
+            self.password = row[2]
+        except:
+            self.id = 0
+            self.username = ''
+            self.password = ''
 
     def get_user(self, username):
         try:
@@ -92,9 +97,14 @@ class User():
 
         row = db.fetchone()
 
-        self.id = row[0]
-        self.username = row[1]
-        self.password = row[2]
+        try:
+            self.id = row[0]
+            self.username = row[1]
+            self.password = row[2]
+        except:
+            self.id = 0
+            self.username = ''
+            self.password = ''
 
     def passcomp(self, password):
         hashpass = hashlib.sha1(self.username.lower() + password)
