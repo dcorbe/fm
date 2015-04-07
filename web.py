@@ -198,7 +198,10 @@ def get_rating(i_song, i_user):
         vote = 0
 
     return vote
-    
+
+#
+# This is being deprecated in favor of the Song class
+#
 def get_song(i_song, i_user=False):
     db = conn.cursor()
 
