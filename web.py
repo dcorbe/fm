@@ -7,13 +7,13 @@ import hashlib
 import random
 import string
 
-import api
 from DB import *
 from users import User
 from composer import compose
 from forum import forum
 from blog import blog
 from config import *
+import api
 
 app = Flask(__name__)
 app.register_blueprint(forum)
@@ -264,7 +264,15 @@ def login():
         else:
             return "Login Incorrect"
     else:
-        return redirect(api.redirect_url(request))
+        return render_template('login.html', api=api)
+
+@app.route('/playlists')
+def playlists():
+    if api.logged_in(session):
+        print "Returning playlists page"
+        return render_template("playlists.html", api=api)
+    else:
+        return redirect(url_for('login'))
 
 if __name__ == '__main__':
     # If we're running from the command line we want debugging info
