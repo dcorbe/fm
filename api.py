@@ -5,6 +5,7 @@ from post import *
 from user import *
 from topics import *
 from forums import *
+from playlist import *
 
 def logged_in(session):
     if 'username' in session:
@@ -122,3 +123,37 @@ def reindex():
                 thread.updatecount(thread.postcount)
 
     print "Indexed {0} posts in {1} threads".format(posts, threads)
+
+
+#
+# Get a list of playlists maintained by a given user
+#
+def get_playlists(i_user=0):
+    playlists = [ ]
+    listenum = { }
+
+    try:
+        db = conn.cursor()
+    except NameError:
+        conn = DB()
+        db = conn.cursor()
+        
+    db.execute("""SELECT id,listnum
+                  FROM playlists
+                  WHERE i_user = %s
+                  ORDER BY listnum,id """, (i_user))
+
+    rows = db.fetchall()
+
+    for row in rows:
+        try:
+            if listenum[row[1]]:
+                continue
+        except:
+            pass
+
+        listenum[row[1]] = True;
+        p = Playlist(row[1], i_user)
+        playlists.append(p)
+
+    return playlists
