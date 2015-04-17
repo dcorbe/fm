@@ -80,6 +80,12 @@ class User():
             self.password = ''
 
     def get_user(self, username):
+        if i_user == 0:
+            self.id = 0
+            self.username = 'Random'
+            self.password = ''
+            return
+
         try:
             db = conn.cursor()
         except NameError:
