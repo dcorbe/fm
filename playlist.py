@@ -7,12 +7,7 @@ class Playlist():
     queryGetPlaylist = """
         SELECT name, description 
         FROM playlist_settings 
-        WHERE id = %s
-    """
-    queryGetSongs = """
-        SELECT i_song
-        FROM playlists
-        WHERE listnum = %s AND i_user = %s
+        WHERE id = %s AND i_user = %s
     """
     queryGetSongs = """
         SELECT i_song
@@ -55,18 +50,20 @@ class Playlist():
             self.owner.open(self.i_user)
 
         self.get_song_count()
-        
+
+        self.get_playlist_info()
+
         if get_songs:
             self.get_songs()
         
-    def get_playlist_info(self, i_playlist=0):
+    def get_playlist_info(self):
         try:
             db = conn.cursor()
         except NameError:
             conn = DB()
             db = conn.cursor()
 
-        db.execute(self.queryGetPlaylist, (i_playlist))
+        db.execute(self.queryGetPlaylist, (self.id, self.i_user))
         row = db.fetchone()
         
         try:
