@@ -9,6 +9,16 @@
 <body>
   {% include 'header.html' %}
 
+  {% if session['i_playlist'] > 0 %}
+  <div class="container">
+    <div class="text-center alert alert-info">
+      <b>Heads Up!</b> you are managing the following playlist:
+      <a class="alert-link" href="#">{{ playlist.name }}.</a>
+      <a class="alert-link" href="#">Click here</a> to drop back to the request queue instead.</a>
+    </div>
+  </div>
+  {% endif %}
+
   <div class="containter">
     <div class="table-responsive">
       <table class="table table-striped table-condensed table-hover">
@@ -24,7 +34,11 @@
 	  <tr>
 	    <td>{{ song['artist'] }}</td>
 	    <td>{{ song['title'] }}</td>
+	    {% if session['i_playlist'] > 0 %}
+	    <td><a href="#">Add to Playlist</a></td>
+	    {% else %}
 	    <td><a href="{{ url_for('song_request', i_song=song['i_song']) }}">Request</a></td>
+	    {% endif %}
 	  </tr>
 	  {% endfor %}
 	</tbody>

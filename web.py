@@ -13,6 +13,7 @@ from composer import compose
 from forum import forum
 from blog import blog
 from config import *
+from playlist import Playlist
 import api
 
 app = Flask(__name__)
@@ -107,6 +108,14 @@ def search():
     db = conn.cursor()
     results = [ ]
 
+    # Contextual searching
+    if 'i_playlist' in session and 'i_user' in session:
+        playlist = Playlist(session['i_playlist'], session['i_user'])
+    else:
+        session['i_playlist'] = 0
+        session['i_user'] = 0
+        playlist = Playlist()
+        
     if request.method == "POST":
         artist = request.form['artist']
         title = request.form['title']
@@ -128,7 +137,7 @@ def search():
                          'title': row[2].decode('UTF-8'),
                          'path': row[3]})
 
-        return render_template("searchresults.html", results=results, api=api)
+        return render_template("searchresults.html", results=results, api=api, playlist=playlist)
     else:
         return render_template("search.html", api=api)
 
@@ -260,11 +269,17 @@ def login():
         if user.passcomp(request.form['password']) == True:
             session['username'] = request.form['username']
             session['i_user'] = user.id
+            session['i_playlist'] = 0
             return redirect(api.redirect_url(request))
         else:
             return "Login Incorrect"
     else:
         return render_template('login.html', api=api)
+
+@app.route('/sessionset/i_playlist/<i_playlist>')
+def session_set_variable(i_playlist = 0):
+    session['i_playlist'] = i_playlist
+    return(redirect(api.redirect_url(request)))
 
 @app.route('/user/<i_user>/playlists')
 def playlists(i_user = 0):
