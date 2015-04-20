@@ -157,3 +157,25 @@ def get_playlists(i_user=0):
         playlists.append(p)
 
     return playlists
+
+#
+# Return a specific playlist
+#
+def get_playlist(i_user=0, i_playlist=0):
+    p = Playlist(i_playlist, i_user)
+    p.get_songs()
+    return p
+
+#
+# Delete a playlist entry
+#
+def del_playlist_song(i_user=0, i_playlist=0, i_song=0):
+    try:
+        db = conn.cursor()
+    except NameError:
+        conn = DB()
+        db = conn.cursor()
+
+    db.execute("DELETE FROM playlists WHERE i_user=%s AND listnum=%s AND i_song=%s", (i_user, i_playlist, i_song))
+
+

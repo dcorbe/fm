@@ -266,11 +266,28 @@ def login():
     else:
         return render_template('login.html', api=api)
 
-@app.route('/playlists')
-def playlists():
+@app.route('/user/<i_user>/playlists')
+def playlists(i_user = 0):
     if api.logged_in(session):
         print "Returning playlists page"
-        return render_template("playlists.html", api=api)
+        return render_template("playlists.html", api=api, session=session, i_user=i_user)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/user/<i_user>/playlist/<i_playlist>')
+def playlist_byuser(i_user = 0, i_playlist = 0):
+    p = api.get_playlist(i_user, i_playlist)
+    return render_template('editplaylist.html', api=api, session=session, i_user=i_user, i_playlist=i_playlist, playlist=p)
+
+@app.route('/user/<i_user>/playlist/<i_playlist>/song/<i_song>/delete')
+def playlist_deletesong(i_user = 0, i_playlist = 0, i_song = 0):
+    if api.logged_in(session):
+        if int(session['i_user']) == int(i_user):
+            api.del_playlist_song(i_user, i_playlist, i_song)
+            return redirect(url_for('playlist_byuser', i_user=i_user, i_playlist=i_playlist))
+        else:
+            # TODO: Error hint here maybe?  
+            return "<h1>session['i_user'] = {0}  i_user = {1}</h1>".format(session['i_user'],i_user)
     else:
         return redirect(url_for('login'))
 
