@@ -112,6 +112,8 @@ def search():
     if 'i_playlist' in session and 'i_user' in session:
         playlist = Playlist(session['i_playlist'], session['i_user'])
     else:
+        # TODO: Template problem here.  
+        session['i_playlist'] = 0
         playlist = Playlist()
         
     if request.method == "POST":
@@ -133,7 +135,7 @@ def search():
             results.append({'i_song': row[0],
                          'artist': row[1].decode('UTF-8'),
                          'title': row[2].decode('UTF-8'),
-                         'path': row[3]})
+                            'path': row[3]})
 
         return render_template("searchresults.html", results=results, api=api, playlist=playlist)
     else:
