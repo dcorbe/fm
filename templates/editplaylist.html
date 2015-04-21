@@ -25,6 +25,11 @@
 	    <td><a href="{{ url_for('playlist_deletesong', i_user=playlist.owner.id, i_playlist=playlist.id, i_song=song.id) }}">Delete</a></td>
 	  </tr>
 	  {% endfor %}
+	  <tr>
+	    <td/>
+	    <td/>
+	    <td><a href="{{ api.session_setvar_playlist(playlist.id, url_for('search')) }}">Add Song</a></td>
+	  </tr>
 	</tbody>
       </table>
     </div>

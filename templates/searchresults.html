@@ -35,9 +35,9 @@
 	    <td>{{ song['artist'] }}</td>
 	    <td>{{ song['title'] }}</td>
 	    {% if session['i_playlist'] > 0 %}
-	    <td><a href="#">Add to Playlist</a></td>
+	    <td><a href="{{ url_for('playlist_addsong', i_user=session['i_user'], i_playlist=session['i_playlist'], i_song=song['i_song']) }}">Add to Playlist</a></td>
 	    {% else %}
-	    <td><a href="{{ url_for('song_request', i_song=song['i_song']) }}">Request</a></td>
+	    <td><a href="{{ url_for('request', i_song=song['i_song']) }}">Request</a></td>
 	    {% endif %}
 	  </tr>
 	  {% endfor %}

@@ -6,6 +6,7 @@ from user import *
 from topics import *
 from forums import *
 from playlist import *
+from flask import url_for
 
 def logged_in(session):
     if 'username' in session:
@@ -179,3 +180,24 @@ def del_playlist_song(i_user=0, i_playlist=0, i_song=0):
     db.execute("DELETE FROM playlists WHERE i_user=%s AND listnum=%s AND i_song=%s", (i_user, i_playlist, i_song))
 
 
+#
+# Add a playlist entry
+#
+def add_playlist_song(i_user=0, i_playlist=0, i_song=0):
+    try:
+        db = conn.cursor()
+    except NameError:
+        conn = DB()
+        db = conn.cursor()
+
+    print "i_user: {0}".format(i_user)
+    print "i_playlist: {0}".format(i_playlist)
+    print "i_song: {0}".format(i_song)
+    
+    db.execute("INSERT INTO playlists (i_user, listnum, i_song) VALUES (%s, %s, %s)", (i_user, i_playlist, i_song))
+
+#
+# Get a link to set a session variable
+#
+def session_setvar_playlist(value = False, redirect_url = False):
+    return "{0}?next={1}".format(url_for('session_set_variable_playlist', i_playlist=value), redirect_url)

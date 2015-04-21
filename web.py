@@ -112,8 +112,6 @@ def search():
     if 'i_playlist' in session and 'i_user' in session:
         playlist = Playlist(session['i_playlist'], session['i_user'])
     else:
-        session['i_playlist'] = 0
-        session['i_user'] = 0
         playlist = Playlist()
         
     if request.method == "POST":
@@ -277,7 +275,7 @@ def login():
         return render_template('login.html', api=api)
 
 @app.route('/sessionset/i_playlist/<i_playlist>')
-def session_set_variable(i_playlist = 0):
+def session_set_variable_playlist(i_playlist = 0):
     session['i_playlist'] = i_playlist
     return(redirect(api.redirect_url(request)))
 
@@ -303,6 +301,15 @@ def playlist_deletesong(i_user = 0, i_playlist = 0, i_song = 0):
         else:
             # TODO: Error hint here maybe?  
             return "<h1>session['i_user'] = {0}  i_user = {1}</h1>".format(session['i_user'],i_user)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/user/<i_user>/playlist/<i_playlist>/song/<i_song>/add')
+def playlist_addsong(i_user = 0, i_playlist = 0, i_song = 0):
+    if api.logged_in(session):
+        if int(session['i_user']) == int(i_user):
+            api.add_playlist_song(i_user, i_playlist, i_song)
+            return redirect(url_for('playlist_byuser', i_user=i_user, i_playlist=i_playlist))            
     else:
         return redirect(url_for('login'))
 
