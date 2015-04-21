@@ -120,6 +120,10 @@ def search():
         artist = request.form['artist']
         title = request.form['title']
 
+        # We don't want people to be able to return every song in the database
+        if artist == '' and title == '':
+            return redirect(url_for('search'))
+        
         # Sanity checks
         if artist == '':
             artist = '%'
