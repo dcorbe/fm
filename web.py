@@ -148,7 +148,7 @@ def song_request(i_song=False):
                    (i_song, session['i_user']))
         return redirect(url_for('playlist'))
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.url))
 
 # /vote with no params needs to elicit an ajax response
 @app.route('/vote', methods=['GET', 'POST'])
@@ -157,7 +157,7 @@ def vote_test(i_song=False, rating=False):
     db = conn.cursor()
 
     if not 'username' in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.url))
 
     if (request.method == "POST"):
         i_user = session['i_user']
@@ -268,6 +268,7 @@ def login():
             session['username'] = request.form['username']
             session['i_user'] = user.id
             session['i_playlist'] = 0
+            print "request.get['next'] = {0}".format(request.args.get('next'))
             return redirect(api.redirect_url(request))
         else:
             return "Login Incorrect"
@@ -285,7 +286,7 @@ def playlists(i_user = 0):
         print "Returning playlists page"
         return render_template("playlists.html", api=api, session=session, i_user=i_user)
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.url))
 
 @app.route('/user/<i_user>/playlist/<i_playlist>')
 def playlist_byuser(i_user = 0, i_playlist = 0):
@@ -302,7 +303,7 @@ def playlist_deletesong(i_user = 0, i_playlist = 0, i_song = 0):
             # TODO: Error hint here maybe?  
             return "<h1>session['i_user'] = {0}  i_user = {1}</h1>".format(session['i_user'],i_user)
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.url))
 
 @app.route('/user/<i_user>/playlist/<i_playlist>/song/<i_song>/add')
 def playlist_addsong(i_user = 0, i_playlist = 0, i_song = 0):
@@ -311,7 +312,7 @@ def playlist_addsong(i_user = 0, i_playlist = 0, i_song = 0):
             api.add_playlist_song(i_user, i_playlist, i_song)
             return redirect(url_for('playlist_byuser', i_user=i_user, i_playlist=i_playlist))            
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('login', next=request.url))
 
 if __name__ == '__main__':
     # If we're running from the command line we want debugging info
