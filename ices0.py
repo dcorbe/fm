@@ -5,16 +5,19 @@ import random
 
 # Custom classes
 from DB import *
+from song import *
 
 # Set up the app
 conn = DB()
 songnumber = 0
 playlist = [ ]
 count = 0
+i_user = 0
+i_playlist = 0
 
 # Function called to initialize your python environment.
 # Should return 1 if ok, and 0 if something went wrong.
-def ices_init ():
+def ices_init (pmargs=False):
     global conn
     global paylist
     global count
@@ -22,15 +25,28 @@ def ices_init ():
     db = conn.cursor()
 
     print 'Executing initialize() function..'
+
+    print "Parsing module options.."
+    args = pmargs.split(":")
+    try:
+        i_user = int(args[0])
+        i_playlist = int(args[1])
+    except:
+        i_user = 0
+        i_playlist = 0
+    
     print 'Loading Playlist from DB...'
 
-    db.execute("SELECT * FROM songs")
+    if i_user > 0 and i_playlist > 0:
+        db.execute("SELECT i_song FROM playlists WHERE listnum = %s AND i_user = %s", (i_playlist, i_user))
+    else:
+        db.execute("SELECT id FROM songs")
+
     songs = db.fetchall()
     for row in songs:
-        playlist.append({'i_song': row[0],
-                         'artist': row[1],
-                         'title': row[2],
-                         'path': row[3]})
+        s = Song(int(row[0]))
+        print "DEBUG: loading song.id: {0} ({1} - {2})".format(s.id, s.artist, s.title)
+        playlist.append(s)
         count = count + 1
 
     # Shuffle list
@@ -39,19 +55,19 @@ def ices_init ():
     return 1
 
 def rpcstart():
-    #rpcserver.debug = True
+    rpcserver.debug = True
     rpcserver.secret_key = '2b6a57457a69559a69678bca4d5ab023'
     rpcserver.run(host='0.0.0.0', port=12345)
 
 # Function called to shutdown your python enviroment.
 # Return 1 if ok, 0 if something went wrong.
-def ices_shutdown ():
+def ices_shutdown (pmargs=False):
 	print 'Executing shutdown() function...'
 	return 1
 
 # Function called to get the next filename to stream. 
 # Should return a string.
-def ices_get_next ():
+def ices_get_next (pmargs=False):
     global playlist
     global count
     global songnumber
@@ -77,15 +93,20 @@ def ices_get_next ():
     # Nothing in the playlist so process the shuffle queue
     print 'Executing get_next() function...'
 
-    if (count -1) == songnumber:
+    print "DEBUG: Song Number: {0}".format(songnumber)
+
+    try:
+        song = playlist[songnumber]
+    except:
+        random.shuffle(playlist)
         songnumber = 0
-    else:
-        songnumber = songnumber + 1
+        song = playlist[0]
 
-    song = playlist[songnumber]
+    songnumber = songnumber + 1
 
-    add_to_history(song['i_song'])
-    return song['path']
+    add_to_history(song.id)
+
+    return song.path
 
 # This is the function that manages the playlist history
 def add_to_history(i_song, i_user=0):
@@ -105,7 +126,7 @@ def add_to_history(i_song, i_user=0):
 # This function, if defined, returns the string you'd like used
 # as metadata (ie for title streaming) for the current song. You may
 # return null to indicate that the file comment should be used.
-def ices_get_metadata ():
+def ices_get_metadata (pmargs=False):
     db = conn.cursor()
     history = [ ]
 
@@ -120,7 +141,7 @@ def ices_get_metadata ():
 # Function used to put the current line number of
 # the playlist in the cue file. If you don't care about this number
 # don't use it.
-def ices_get_lineno ():
+def ices_get_lineno (pmargs=False):
     global songnumber
     songnumber = songnumber + 1
     return songnumber
