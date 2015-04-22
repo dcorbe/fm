@@ -98,7 +98,8 @@ def ices_get_next (pmargs=False):
     try:
         song = playlist[songnumber]
     except:
-        random.shuffle(playlist)
+        playlist = [ ]
+        ices_init(pmargs)
         songnumber = 0
         song = playlist[0]
 
